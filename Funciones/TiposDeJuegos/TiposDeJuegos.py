@@ -31,10 +31,10 @@ class Tipos_De_Juegos(tk.Tk):
 
         # Creamos los botones de cada tipo de juego
         self.botones = [
-            ("Tradicional",self.seleccionar_Dificultad),
-            ("Tradicional con Tiempo",self.seleccionar_Dificultad),
-            ("Contratiempo",self.seleccionar_Dificultad),
-            ("Versus",self.seleccionar_Dificultad)
+            ("Tradicional",self.tipo_Seleccionado),
+            ("Tradicional con Tiempo",self.tipo_Seleccionado),
+            ("Contratiempo",self.tipo_Seleccionado),
+            ("Versus",self.tipo_Seleccionado)
         ]
 
         # Definimos la coordenada y 
@@ -42,25 +42,25 @@ class Tipos_De_Juegos(tk.Tk):
         # Realizamos un bucle por cada elemento de la tupla de self.botones 
         for texto_boton,ejecutar_Funcion in self.botones:
             # Creamos un boton por cada iteracion
-            nuevo_boton = tk.Button(self,text=texto_boton,font=("Arial",18,"bold"),width=20,command=lambda:ejecutar_Funcion(),bg="#000C3D",fg="#49FDA9")
+            nuevo_boton = tk.Button(self,text=texto_boton,font=("Arial",18,"bold"),width=20,command=lambda texto=texto_boton:ejecutar_Funcion(texto),bg="#000C3D",fg="#49FDA9")
             # Creamos y mostramos en la ventana cada boton de la tupla
-            self.ventana = self.canvas.create_window(270, self.y,anchor="nw",window=nuevo_boton)
+            self.ventana = self.canvas.create_window(275, self.y,anchor="nw",window=nuevo_boton)
             # Cambiamos el valor de la coordenada "y"
             self.y+=80
 
         # Creamos el boton regresar
         self.boton_Regresar = tk.Button(self,width=20,text="Regresar",font=("Arial",18,"bold"),bg="#000C3D",fg="#49FDA9",
                                         command=lambda: self.regresar_Tipo_Juego())
-        self.canvas.create_window(270,self.y,anchor="nw",window=self.boton_Regresar)
+        self.canvas.create_window(275,self.y,anchor="nw",window=self.boton_Regresar)
         
         self.mainloop()
         
 
     # Metódo que llamará cada boton al ser presionado    
-    def seleccionar_Dificultad(self):
+    def tipo_Seleccionado(self,texto_Tipo_Juego):
         self.destroy()
-        Dificultades()
-
+        Dificultades(texto_Tipo_Juego)
+    
     def crear_Fondo(self):
         # Creamos el fondo
         try:
@@ -76,5 +76,5 @@ class Tipos_De_Juegos(tk.Tk):
     def regresar_Tipo_Juego(self):
         self.destroy()
         import MenuDeInicio
-        MenuDeInicio()
+        MenuDeInicio
         

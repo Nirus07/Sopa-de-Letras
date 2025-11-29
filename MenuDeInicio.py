@@ -1,7 +1,13 @@
-from email.mime import image
+# Importamos tk para la interfaz gráfica
 import tkinter as tk
+# Importamos la funcion tipo de juego para ir a la seccion de la selección del tipo de juego
 from Funciones.TiposDeJuegos.TiposDeJuegos import Tipos_De_Juegos
+# Importamos PIL para mostrar las imagenes como fondo
 from PIL import Image, ImageTk
+
+#E: La clase menu de inicio hereda tk
+#S: Muestra la interfaz del menu de inicio con sus respectivos botones
+#R: Solo hereda las propiedades de la interfaz gráfica
 
 # Clase del mnu de inicio que hereda tk
 class MenuInicio(tk.Tk):
@@ -9,7 +15,6 @@ class MenuInicio(tk.Tk):
         super().__init__()
         # Llamamos la metodo del menu
         self.Menu()
-
 
     # Metodo para mostrar el menu
     def Menu(self):
@@ -42,7 +47,7 @@ class MenuInicio(tk.Tk):
                                      command=lambda:self.mostrar_Tipos_Juegos())
         
         # Creamos el boton del ranking
-        self.boton_Ranking = tk.Button(self,width=20,text="Ranking",font=("Arial",20,"bold"), bg="#000C3D",fg="#49FDA9",),
+        self.boton_Ranking = tk.Button(self,width=20,text="Ver Ranking",font=("Arial",20,"bold"), bg="#000C3D",fg="#49FDA9",),
         #command=lambda:self.ver_Ranking)
 
         # Creamos el boton de ayuda
@@ -51,15 +56,19 @@ class MenuInicio(tk.Tk):
         # Creamos el boton para salir
         self.boton_Salir = tk.Button(self,width=20,text="Salir",font=("Arial",20,"bold"), bg="#000C3D",fg="#49FDA9",command=lambda: self.salir_Del_Juego())
         # Mostramos el de iniciar juego en la ventana del canvas
-        self.canvas.create_window(230,200,anchor="nw",window=self.boton_Jugar)
+        self.canvas.create_window(240,200,anchor="nw",window=self.boton_Jugar)
         # Mostramos el boton del ranking en el canvas
-        self.canvas.create_window(230,300,anchor="nw",window=self.boton_Ranking)
+        self.canvas.create_window(240,300,anchor="nw",window=self.boton_Ranking)
         # Mostramos el boton de ayuda en la ventana del canvas
-        self.canvas.create_window(230,400,anchor="nw",window=self.boton_Ayuda)
+        self.canvas.create_window(240,400,anchor="nw",window=self.boton_Ayuda)
         # Mostramos el boton de salir en la ventana del canvas
-        self.canvas.create_window(230,500,anchor="nw",window=self.boton_Salir)
+        self.canvas.create_window(240,500,anchor="nw",window=self.boton_Salir)
         
 
+    #E: Recibe el atributo self
+    #S: Devuelve la imagen como fondo de la interfaz
+    #R: Solo recibe el atributo self 
+    # Creamos el método para mostrar el fondo como imagem
     def crear_Fondo(self):
         # Creamos el fondo
         try:
