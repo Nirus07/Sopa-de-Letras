@@ -1,66 +1,88 @@
 # Importamos la clase de sopa de letras
-from Funciones.Dificultades.Dificultades import Dificultades
+from Funciones.Dificultades.Dificultades import DificultadesFrame
 # Importamos tkinter
 import tkinter as tk
 from PIL import Image, ImageTk
 
+from Funciones.Idioma.Idioma import idioma_Global
+
 # Creamos la clase para tipos de juegos que hereda tk
-class Tipos_De_Juegos(tk.Tk):
-    def __init__(self):
-        super().__init__()
+class TiposDeJuegosFrame(tk.Frame):
+    def __init__(self,ventana_Padre,controlador):
+        super().__init__(ventana_Padre)
+        self.controlador = controlador
 
         # Ejecutamos el metodo abrir_Ventana
         self.abrir_Ventana()
 
 
+
     # Metódo para ejecutar la ventana en bucle
     def abrir_Ventana(self):
+
 
         # Configuramos las filas y columnas de la ventana
         for i in range(5):
             self.rowconfigure(i,weight=1)
             self.columnconfigure(i,weight=1)
 
-        # Definimos las medidas
-        self.geometry("800x600")
 
         # Creamos un canvas para esta seccion
         self.canvas = tk.Canvas(self,width=800,height=600)
+
+        # Posicionamos el canvas en el medio
         self.canvas.grid(row=2,column=2)
+
+        self.idioma = idioma_Global
+        # Definimos la coordenada y 
+        self.y = 180
+        
+        # Llamamos al método para crear y mostrar el fondo
         self.crear_Fondo()
 
+        # Llamamos al método para crear los botones y mostrarlos
+        self.crear_Botones()
+        
+        
+
+    # Método para crear los botones
+    def crear_Botones(self):
         # Creamos los botones de cada tipo de juego
         self.botones = [
             ("Tradicional",self.tipo_Seleccionado),
-            ("Tradicional con Tiempo",self.tipo_Seleccionado),
+            ("Tradicional_Con_Tiempo",self.tipo_Seleccionado),
             ("Contratiempo",self.tipo_Seleccionado),
             ("Versus",self.tipo_Seleccionado)
         ]
 
-        # Definimos la coordenada y 
-        self.y = 180
+        
         # Realizamos un bucle por cada elemento de la tupla de self.botones 
-        for texto_boton,ejecutar_Funcion in self.botones:
+        for clave_Tipo_Juego,ejecutar_Funcion in self.botones:
+            texto_Boton_Tipo_Juego = self.idioma.get(clave_Tipo_Juego)
             # Creamos un boton por cada iteracion
-            nuevo_boton = tk.Button(self,text=texto_boton,font=("Arial",18,"bold"),width=20,command=lambda texto=texto_boton:ejecutar_Funcion(texto),bg="#000C3D",fg="#49FDA9")
+            nuevo_boton = tk.Button(self,text=texto_Boton_Tipo_Juego,font=("Arial",18,"bold"),width=20,
+                                    command=lambda texto=texto_Boton_Tipo_Juego:ejecutar_Funcion(texto),bg="#000C3D",fg="#49FDA9")
+            self.idioma.registrar_Clave_Boton(nuevo_boton,clave_Tipo_Juego)
             # Creamos y mostramos en la ventana cada boton de la tupla
-            self.ventana = self.canvas.create_window(275, self.y,anchor="nw",window=nuevo_boton)
+            self.canvas.create_window(250, self.y,anchor="nw",window=nuevo_boton)
             # Cambiamos el valor de la coordenada "y"
             self.y+=80
 
         # Creamos el boton regresar
         self.boton_Regresar = tk.Button(self,width=20,text="Regresar",font=("Arial",18,"bold"),bg="#000C3D",fg="#49FDA9",
                                         command=lambda: self.regresar_Tipo_Juego())
-        self.canvas.create_window(275,self.y,anchor="nw",window=self.boton_Regresar)
+        self.idioma.registrar_Clave_Boton(self.boton_Regresar,"Regresar") 
         
-        self.mainloop()
-        
+        self.canvas.create_window(250,self.y,anchor="nw",window=self.boton_Regresar)
+
 
     # Metódo que llamará cada boton al ser presionado    
     def tipo_Seleccionado(self,texto_Tipo_Juego):
-        self.destroy()
-        Dificultades(texto_Tipo_Juego)
+
+        self.controlador.actualizar_Dificultad(texto_Tipo_Juego)
+        self.controlador.mostrar_frame("Dificultades")
     
+    # Método para crear el fondo de la interfaz
     def crear_Fondo(self):
         # Creamos el fondo
         try:
@@ -69,12 +91,11 @@ class Tipos_De_Juegos(tk.Tk):
         except FileNotFoundError as e:
             print(f"Error: no se encontró el archivo de imagen. {e}")
         # Creamos la imagen en el canvas
-        self.fondo = self.canvas.create_image(20,20,anchor="nw",image=self.imagen_tk)
+        self.fondo = self.canvas.create_image(0,0,anchor="nw",image=self.imagen_tk)
         # Tomamos la referencia del fondo de la imagen
         self.canvas.image = self.imagen_tk 
-
+    
+    # Método para regresar al menú de inicio
     def regresar_Tipo_Juego(self):
-        self.destroy()
-        import MenuDeInicio
-        MenuDeInicio
+        self.controlador.mostrar_frame("Menu")
         

@@ -1,0 +1,14 @@
+House
+Child
+Dog
+Food
+Weight
+Sky
+Cellphone
+Happy
+University
+Paper
+Book
+Computer
+Bath
+Water
