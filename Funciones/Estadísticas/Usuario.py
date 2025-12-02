@@ -1,26 +1,28 @@
-class Apodo:
-    def __init__(self):
-        self.apodos = []
+from Funciones.Rutas import Rutas
 
-    def agregar_Apodo(self,nuevo_Apodo):
-        if(self.apodos_Repetidos(nuevo_Apodo)):
-            print("Este apodo ya existe, introduce otro apodo.")
-            # Volver a solicitar apodo
-        else:
-            self.apodos.append(nuevo_Apodo)
-            self.base_De_Datos_Usuarios()
+class Apodo:
+    def __init__(self,nuevo_Apodo):
+        self.apodos = []
+        self.apodos_Repetidos(nuevo_Apodo)
+
 
     def apodos_Repetidos(self,nuevo_Apodo):
         if(self.apodos == []):
             return False
         else:
+            self.leer_Base_De_Datos(nuevo_Apodo)
+            
+    def base_De_Datos_Usuarios(self):
+        with open("BaseDeDatos/Jugadores.txt","a") as archivo:
             for apodo in self.apodos:
+                archivo.write(f"{apodo}\n")
+    
+    def leer_Base_De_Datos(self,nuevo_Apodo):
+        with open("BaseDeDatos/Jugadores.txt","r") as archivo:
+            usuarios =archivo.readlines()
+            for usuario in usuarios:
+                apodo = usuario.strip()
                 if(apodo == nuevo_Apodo):
                     return True
                 else:
                     return False
-            
-    def base_De_Datos_Usuarios(self):
-        with open("Base De Datos/Usuarios.txt","a") as archivo:
-            for apodo in self.apodos:
-                archivo.write(f"{apodo}\n")

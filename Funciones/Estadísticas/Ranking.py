@@ -7,6 +7,8 @@ from Funciones.Idioma.Idioma import idioma_Global
 
 from Funciones.Rutas import Rutas
 
+import os
+
 # E: Hereda el frame de la ventana principal
 # S: Muestra otra seccion donde estarán los botones para cada ranking
 # R: No puede modificar la geometria ni el titulo de la ventana
@@ -160,36 +162,39 @@ class Estadisticas(tk.Frame):
     
 
     def registrar_Estadisticas_Todo(self,jugador_Nombre,minutos,segundos,tipo_Juego,dificultad):
+
         with open(Rutas.Registro_Todo,"a", encoding="utf-8") as archivo:
             archivo.write(f"Jugador: {jugador_Nombre}, Tiempo: {minutos}:{segundos}, Tipo de Juego: {tipo_Juego}, Dificultad: {dificultad}\n")
         
         # Inicializamos la ruta con None por defecto
         ruta = None
         # Verificamos si el tipo de modo es tradicional
-        if(tipo_Juego == "Tradicional"):
+        print(tipo_Juego)
+        if(tipo_Juego == "Tradicional con Tiempo"):
             if(dificultad == "Principiante"):
-                ruta = Rutas.Estadisticas_Tradicional_Tiempo_Principiantes_txt
-            elif(dificultad == "Intermedio"):
-                ruta = Rutas.Estadisticas_Tradicional_Tiempo_Intermedios_txt
-            elif(dificultad == "Avanzado"):
-                ruta = Rutas.Estadisticas_Tradicional_Avanzados_txt
+                ruta = Rutas.Estadisticas_Tradicional_Tiempo_Principiante_txt
+            elif(dificultad == "Intermedia"):
+                ruta = Rutas.Estadisticas_Tradicional_Tiempo_Intermedio_txt
+            elif(dificultad == "Avanzada"):
+                ruta = Rutas.Estadisticas_Tradicional_Avanzado_txt
 
         # Verificamos si el tipo de modo es contratiempo
         elif(tipo_Juego == "Contratiempo"):
+            
             if(dificultad == "Principiante"):
                 ruta = Rutas.Estadisticas_Contratiempo_Principiante_txt
-            elif(dificultad == "Intermedio"):
+            elif(dificultad == "Intermedia"):
                 ruta = Rutas.Estadisticas_Contratiempo_Intermedio_txt
-            elif(dificultad == "Avanzado"):
+            elif(dificultad == "Avanzada"):
                 ruta = Rutas.Estadisticas_Contratiempo_Avanzado_txt
 
         # Verificamos si el tipo de modo es modo versus
         elif(tipo_Juego == "Versus"):
             if(dificultad == "Principiante"):
-                ruta = Rutas.Estadisticas_Versus_Principiantes_txt
-            elif(dificultad == "Intermedio"):
+                ruta = Rutas.Estadisticas_Versus_Principiante_txt
+            elif(dificultad == "Intermedia"):
                 ruta = Rutas.Estadisticas_Versus_Intermedio_txt
-            elif(dificultad == "Avanzado"):
+            elif(dificultad == "Avanzada"):
                 ruta = Rutas.Estadisticas_Versus_Avanzado_txt
 
         # Si la ruta esta bien, se coloca en el txt del top correspondiente

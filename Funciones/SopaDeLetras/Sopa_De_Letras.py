@@ -5,6 +5,8 @@ from Funciones.Idioma.Idioma import idioma_Global
 
 from Funciones.Estadísticas.Ranking import Estadisticas
 
+from Funciones.Estadísticas.Usuario import Apodo
+
 class SopaDeLetras(tk.Frame):
     def __init__(self,ventana_Padre,controlador,filas,col,cantidad_Palabras,texto_Tipo_Juego,texto_dificultad):
         super().__init__(ventana_Padre)
@@ -215,7 +217,6 @@ class SopaDeLetras(tk.Frame):
 
         self.Ingresar_Nombre = tk.Entry(self,width=28,bg="#ffffff",fg="#000C3D")
         self.canvas_Ganador.create_window(170,200,window=self.Ingresar_Nombre,anchor="nw")
-
         self.boton_Enviar_Ganador = tk.Button(
             self,
             width=20,
@@ -235,24 +236,23 @@ class SopaDeLetras(tk.Frame):
         if nombre == "":
             return  # No registrar si está vacío
 
-        # Registrar en archivo Registro_Juegos.txt
-        with open("Funciones/BasesDeDatos/Registro_Juegos.txt", "a", encoding="utf-8") as archivo:
-            archivo.write(
-                f"{nombre} | {self.minutos}:{self.segundos:02d} | {self.texto_Tipo_Juego} | {self.texto_dificultad}\n"
-            )
 
         # Registrar también en sistema de estadísticas específico
-        Estadisticas.registrar_Estadisticas_Todo(
-            self,
-            nombre,
-            self.minutos,
-            self.segundos,
-            self.texto_Tipo_Juego,
-            self.texto_dificultad
-        )
+        if(Apodo(nombre)):
+            Apodo
+            Estadisticas.registrar_Estadisticas_Todo(
+                self,
+                nombre,
+                self.minutos,
+                self.segundos,
+                self.texto_Tipo_Juego,
+                self.texto_dificultad
+            )
 
-        # Volver al menú
-        self.controlador.mostrar_frame("Menu")
+            # Volver al menú
+            self.controlador.mostrar_frame("Menu")
+        else:
+            self.ventana_Ganador()
 
     def dibujar(self):
         y = 0

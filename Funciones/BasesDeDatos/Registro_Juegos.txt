@@ -5,3 +5,15 @@ Lando | 0:35 | Contratiempo | Principiante
 Jugador: Lando, Tiempo: 0:35, Tipo de Juego: Contratiempo, Dificultad: Principiante
 Lando | 1:35 | Contratiempo | Intermedia
 Jugador: Lando, Tiempo: 1:35, Tipo de Juego: Contratiempo, Dificultad: Intermedia
+Jugador: Mario, Tiempo: 0:14, Tipo de Juego: Contratiempo, Dificultad: Intermedia
+Jugador: Carlos, Tiempo: 0:26, Tipo de Juego: Tradicional con Tiempo, Dificultad: Intermedia
+Jugador: pqopqqpo, Tiempo: 1:36, Tipo de Juego: Contratiempo, Dificultad: Intermedia
+Jugador: Mauricio, Tiempo: 0:48, Tipo de Juego: Contratiempo, Dificultad: Principiante
+Jugador: papa, Tiempo: 1:31, Tipo de Juego: Contratiempo, Dificultad: Intermedia
+Jugador: querido, Tiempo: 1:38, Tipo de Juego: Contratiempo, Dificultad: Intermedia
+Jugador: Julian, Tiempo: 1:33, Tipo de Juego: Contratiempo, Dificultad: Intermedia
+Jugador: lalo, Tiempo: 0:14, Tipo de Juego: Tradicional con Tiempo, Dificultad: Principiante
+Jugador: Manuel, Tiempo: 0:12, Tipo de Juego: Tradicional con Tiempo, Dificultad: Principiante
+Jugador: Camaleon, Tiempo: 0:16, Tipo de Juego: Tradicional con Tiempo, Dificultad: Principiante
+Jugador: Manuel-2, Tiempo: 0:14, Tipo de Juego: Tradicional con Tiempo, Dificultad: Principiante
+Jugador: Rodrigo, Tiempo: 0:21, Tipo de Juego: Tradicional con Tiempo, Dificultad: Intermedia
