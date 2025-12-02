@@ -20,6 +20,7 @@ class DificultadesFrame(tk.Frame):
         self.controlador = controlador
         self.texto_Tipo_Juego = texto_Tipo_Juego
         self.idioma = idioma_Global
+        self.idioma.registrar_Cambio_Idioma(self.actualizar_Idioma)
         self.abrir_Ventana()
 
 
@@ -72,7 +73,8 @@ class DificultadesFrame(tk.Frame):
     def crear_Fondo(self):
         # Creamos el fondo para la imagen
         try:
-            self.imagen_Fondo = Image.open("Imagenes/Dificultad/Frame.png")
+            ruta = self.idioma.get("Dificultad")
+            self.imagen_Fondo = Image.open(ruta)
             self.imagen_tk = ImageTk.PhotoImage(self.imagen_Fondo)
         except FileNotFoundError as e:
             print(f"Error: no se encontró el archivo de imagen. {e}")
@@ -85,6 +87,11 @@ class DificultadesFrame(tk.Frame):
 
     def actualizar_Tipo_Juego(self, texto):
         self.texto_Tipo_Juego = texto
+
+    
+    def actualizar_Idioma(self):
+        self.crear_Fondo()
+        self.canvas.create_image(0,0,anchor="nw",image=self.imagen_tk)
 
     
     # Metodo para iniciar el juego segun la dificultad

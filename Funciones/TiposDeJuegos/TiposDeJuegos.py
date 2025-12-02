@@ -6,11 +6,16 @@ from PIL import Image, ImageTk
 
 from Funciones.Idioma.Idioma import idioma_Global
 
+from Funciones.Estadísticas.Ranking import Estadisticas
+
 # Creamos la clase para tipos de juegos que hereda tk
 class TiposDeJuegosFrame(tk.Frame):
     def __init__(self,ventana_Padre,controlador):
         super().__init__(ventana_Padre)
         self.controlador = controlador
+        self.idioma = idioma_Global
+        self.idioma.registrar_Cambio_Idioma(self.actualizar_Idioma)
+
 
         # Ejecutamos el metodo abrir_Ventana
         self.abrir_Ventana()
@@ -33,7 +38,6 @@ class TiposDeJuegosFrame(tk.Frame):
         # Posicionamos el canvas en el medio
         self.canvas.grid(row=2,column=2)
 
-        self.idioma = idioma_Global
         # Definimos la coordenada y 
         self.y = 180
         
@@ -78,7 +82,6 @@ class TiposDeJuegosFrame(tk.Frame):
 
     # Metódo que llamará cada boton al ser presionado    
     def tipo_Seleccionado(self,texto_Tipo_Juego):
-
         self.controlador.actualizar_Dificultad(texto_Tipo_Juego)
         self.controlador.mostrar_frame("Dificultades")
     
@@ -86,14 +89,20 @@ class TiposDeJuegosFrame(tk.Frame):
     def crear_Fondo(self):
         # Creamos el fondo
         try:
-            self.imagen_Fondo = Image.open("Imagenes/Selecciona_Juego/Frame.png")
+            ruta = self.idioma.get("Selecciona_Juego")
+            self.imagen_Fondo = Image.open(ruta)
             self.imagen_tk = ImageTk.PhotoImage(self.imagen_Fondo)
         except FileNotFoundError as e:
             print(f"Error: no se encontró el archivo de imagen. {e}")
+            return
         # Creamos la imagen en el canvas
         self.fondo = self.canvas.create_image(0,0,anchor="nw",image=self.imagen_tk)
         # Tomamos la referencia del fondo de la imagen
         self.canvas.image = self.imagen_tk 
+
+    def actualizar_Idioma(self):
+        self.crear_Fondo()
+        self.canvas.create_image(0,0,anchor="nw",image=self.imagen_tk)
     
     # Método para regresar al menú de inicio
     def regresar_Tipo_Juego(self):

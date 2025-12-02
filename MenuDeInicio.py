@@ -11,7 +11,9 @@ from Funciones.Idioma.Idioma import idioma_Global
 
 from Funciones.Dificultades.Dificultades import DificultadesFrame
 
-from Funciones.SopaDeLetras.SopaDeLetras import Sopa_De_Letras
+from Funciones.SopaDeLetras.Sopa_De_Letras import SopaDeLetras
+
+from Funciones.Estadísticas.Ranking import Estadisticas
 
 #E: La clase menu de inicio hereda tk
 #S: Muestra la interfaz del menu de inicio con sus respectivos botones
@@ -23,6 +25,7 @@ class MenuInicioFrame(tk.Frame):
         super().__init__(ventana_Padre)
         self.controlador = controlador
         self.idioma = idioma_Global
+        self.idioma.registrar_Cambio_Idioma(self.actualizar_Idioma)
         self.botones_arreglo = {}
         # Llamamos la metodo del menu
         self.Menu()
@@ -83,7 +86,7 @@ class MenuInicioFrame(tk.Frame):
         if(texto_boton == "Iniciar Juego" or texto_boton == "Start Game"):
             self.mostrar_Tipos_Juegos()
         elif(texto_boton == "Ver Ranking" or texto_boton == "Ranking"):
-            print("Ranking")
+            self.seccion_Ranking()
         elif(texto_boton == "Ayuda" or texto_boton == "Help"):
             self.seccion_Ayuda()
         elif(texto_boton == "Salir" or texto_boton == "Exit"):
@@ -96,12 +99,16 @@ class MenuInicioFrame(tk.Frame):
     # Creamos el método para mostrar el fondo como imagem
     def crear_Fondo(self):
         # Creamos el fondo
+        
         try:
-            self.imagen_Fondo = Image.open("Imagenes/Inicio/Frame.png")
+            ruta = self.idioma.get("Inicio")
+            self.imagen_Fondo = Image.open(ruta)
             self.imagen_tk = ImageTk.PhotoImage(self.imagen_Fondo)
+
         except FileNotFoundError as e:
             print(f"Error: no se encontró el archivo de imagen. {e}")
-        self.canvas.image = self.imagen_tk 
+        self.canvas.itemconfig(self.imagen_Fondo, image=self.imagen_tk)
+        self.canvas.image = self.imagen_tk
 
 
     def botones_Idioma(self):
@@ -111,12 +118,19 @@ class MenuInicioFrame(tk.Frame):
         ]
 
         for idioma in self.idiomas:
+            
             self.nuevo_Boton_Idioma = tk.Button(self,width=2,height=1,bg="#000C3D",fg="#49FDA9",font=("Arial",16,"bold"),
                                                 text=idioma,command=lambda i=idioma:self.idioma.cambiar_Idioma(i))
             self.canvas.create_window(self.x,530,window=self.nuevo_Boton_Idioma,anchor="nw")
             self.x += 52
+        
+    def actualizar_Idioma(self):
+        self.crear_Fondo()
+        self.canvas.create_image(0,0,anchor="nw",image=self.imagen_tk)
+        
 
-
+    def seccion_Ranking(self):
+        self.controlador.mostrar_frame("Ranking")
 
     def seccion_Ayuda(self):
         self.controlador.mostrar_frame("Ayuda")
@@ -142,6 +156,7 @@ class App(tk.Tk):
         self.frames["Tipos"] = TiposDeJuegosFrame(self.frame_Contenedor, self)
         self.frames["Ayuda"] = AyudaFrame(self.frame_Contenedor, self)
         self.frames["Dificultades"] = DificultadesFrame(self.frame_Contenedor, self, "Vacio")
+        self.frames["Ranking"] = Estadisticas(self.frame_Contenedor,self)
         self.frames["Sopa"] = tk.Frame(self.frame_Contenedor)
 
         for frame in self.frames.values():
@@ -165,7 +180,7 @@ class App(tk.Tk):
             widget.destroy()
 
         # Crear una nueva sopa con tus parámetros
-        Sopa = Sopa_De_Letras(
+        Sopa = SopaDeLetras(
             ventana_Padre=self.frames["Sopa"],
             controlador=self,
             filas=filas,

@@ -1,3 +1,5 @@
+from Funciones.Rutas import Rutas
+
 Textos = {
     "es":{
         "boton_Jugar": "Iniciar Juego",
@@ -29,9 +31,15 @@ Textos = {
         "Volver_al_Inicio":"Volver al Menú",
 
         # Texto Abandonar
-        "Abandonar": "¿Quieres abadonar el juego?",
+        "boton_Abandonar": "Abandonar",
+        "Abandonar": "¿Quieres abandonar el juego?",
         "Opcion_Si": "Si",
         "Opcion_No": "No",
+
+        "Contra_Reloj_Estadisticas":"Contra Reloj",
+        "Tradicional_Tiempo_Estadisticas": "Tradicional con Tiempo",
+        "Versus_Estadisticas": "Versus",
+        "Juegos_Generales": "Todos los Juegos",
 
         # Seccion Ayuda
         "Caracteristicas": ("Caracteristicas: La sopa de letras cuenta con 4 tipos de juegos los cuáles son; Tradicional, Tradicional con tiempo, Contratiempo y Versus,"
@@ -52,6 +60,16 @@ Textos = {
         "3. En el modo 'Versus' los jugadores en caso de no encontrar una palabra en un lapso de 2 minutos, perderá autómaticamente.\n"
         "4. El jugador puede seleccionar las palabras que desea encontrar en la sopa únicamente en la dificultad 'Principiante'.\n"
         ),
+
+        # Rutas Imagenes
+
+        "Inicio": Rutas.Inicio_es,
+        "Selecciona_Juego":Rutas.Selecciona_Juego_es,
+        "Dificultad": Rutas.Dificultad_es,
+        "Ayuda": Rutas.Ayuda_es,
+        "Consulta": Rutas.Consulta,
+        "Ranking": Rutas.Ranking,
+
         "Regresar":"Regresar"
     },
     "en":{
@@ -83,9 +101,16 @@ Textos = {
         "Volver_al_Inicio":"Go to Menu",
 
         # Texto Abadonar
+        "boton_Abandonar": "Quit",
         "Abandonar": "Do you want to quit the game?",
         "Opcion_Si": "Yes",
         "Opcion_No": "No",
+
+        # Botones estadisticas
+        "Contra_Reloj_Estadisticas":"Time Attack",
+        "Tradicional_Tiempo_Estadisticas": "Traditional with Time",
+        "Versus_Estadisticas": "Versus",
+        "Juegos_Generales": "All Games",
 
         # Help Section
         "Caracteristicas": (
@@ -121,6 +146,16 @@ Textos = {
             "4. The player can select the words they want to search for only in the "
             "'Beginner' difficulty.\n"
         ),
+
+        # Rutas Imagenes
+
+        "Inicio": Rutas.Inicio_en,
+        "Selecciona_Juego":Rutas.Selecciona_Juego_en,
+        "Dificultad": Rutas.Dificultad_en,
+        "Ayuda": Rutas.Ayuda_en,
+        "Consulta": Rutas.Consulta,
+        "Ranking": Rutas.Ranking,
+
         "Regresar": "Back"
     }
 }

@@ -1,0 +1,7 @@
+Jugador: Roednick, Tiempo: 0:2, Tipo de Juego: Tradicional con Tiempo, Dificultad: Intermedia
+Lando | 0:35 | Contratiempo | Principiante
+Jugador: Lando, Tiempo: 0:35, Tipo de Juego: Contratiempo, Dificultad: Principiante
+Lando | 0:35 | Contratiempo | Principiante
+Jugador: Lando, Tiempo: 0:35, Tipo de Juego: Contratiempo, Dificultad: Principiante
+Lando | 1:35 | Contratiempo | Intermedia
+Jugador: Lando, Tiempo: 1:35, Tipo de Juego: Contratiempo, Dificultad: Intermedia

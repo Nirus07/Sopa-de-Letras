@@ -14,13 +14,14 @@ class AyudaFrame(tk.Frame):
     def __init__(self,ventana_Padre,controlador):
         super().__init__(ventana_Padre)
         self.controlador = controlador
-        # Llamamos al método que crea la seccion de ayuda
-        self.crear_Interfaz_Ayuda()
         # Guardamos la clase Idioma en un atributo
         self.idioma = idioma_Global
+        self.idioma.registrar_Cambio_Idioma(self.actualizar_Idioma)
         # Definimos el atributo y
         self. y = 150
         self.arreglo_Botones = {}
+        # Llamamos al método que crea la seccion de ayuda
+        self.crear_Interfaz_Ayuda()
         # Llamamos al método que crea los botones de la seccion de ayuda
         self.crear_Botones_Ayuda()
 
@@ -148,21 +149,23 @@ class AyudaFrame(tk.Frame):
     def crear_Fondo_Ayuda(self):
         # Creamos el fondo
         try:
-            fondo_Ayuda = self.imagen_Fondo = Image.open("Imagenes/Ayuda/Frame.png")
-            imagen_Ayuda = ImageTk.PhotoImage(fondo_Ayuda)
+            self.fondo_Ayuda = Image.open(self.idioma.get("Ayuda"))
+            self.imagen_Ayuda = ImageTk.PhotoImage(self.fondo_Ayuda)
         except FileNotFoundError as e:
             print(f"Error: no se encontró el archivo de imagen. {e}")
-        self.canvas.image = imagen_Ayuda
-        self.canvas.create_image(0,0,anchor="nw",image=imagen_Ayuda)
+        self.canvas.image = self.imagen_Ayuda
+        self.canvas.create_image(0,0,anchor="nw",image=self.imagen_Ayuda)
 
     def crear_Fondo_Consulta(self):
         # Creamos el fondo
         try:
-            fondo_Consulta =self.imagen_Fondo = Image.open("Imagenes/Consulta/Frame.png")
-            imagen_Consulta = ImageTk.PhotoImage(fondo_Consulta)
+            self.fondo_Consulta = Image.open(self.idioma.get("Consulta"))
+            self.imagen_Consulta = ImageTk.PhotoImage(self.fondo_Consulta)
         except FileNotFoundError as e:
             print(f"Error: no se encontró el archivo de imagen. {e}")
-        self.nueva_Ventana.image = imagen_Consulta
-        self.nueva_Ventana.create_image(0,0,anchor="nw",image=imagen_Consulta)
+        self.nueva_Ventana.image = self.imagen_Consulta
+        self.nueva_Ventana.create_image(0,0,anchor="nw",image=self.imagen_Consulta)
 
-    
+    def actualizar_Idioma(self):
+        self.crear_Fondo_Ayuda()
+        self.canvas.create_image(0,0,anchor="nw",image=self.imagen_Ayuda)

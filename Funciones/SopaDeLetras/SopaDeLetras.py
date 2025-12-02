@@ -41,15 +41,10 @@ class Sopa_De_Letras(tk.Frame):
 
         # Creamos el atributo "y", inicializandolo
         self.y = 35
-        # Creamos la propiedad self.filas que recibe la cantidad de filas
-        self.filas = filas
-        # Creamos la propiedad self.col que recibe la cantidad de columnas
-        self.col = col
-        self.size = 30
-        self.celdas = []
+
+
         # Creamos la propiedad cantidad_Palabras que recibe la cantidad de palabras
         self.cantidad_Palabras = cantidad_Palabras
-        self.abecedario = "ABCDEFGHIJKLMNÑOPQRSTUVXYZ"
         # Creamos la propiedad self.texto_Tipo_Juego que recibe el texto con el tipo de juego que se va a jugar
         self.texto_Tipo_Juego = texto_Tipo_Juego
         # Creamos las propiedades minutos y segundos para el crónometro
@@ -64,7 +59,6 @@ class Sopa_De_Letras(tk.Frame):
         self.interfaz_Sopa()
         self.tipo_Sopa()
         self.mostrarPalabra()
-        self.crearTablero()
 
     def interfaz_Sopa(self):
         # Bucle para configurar las columnas y filas de la ventana
@@ -90,16 +84,6 @@ class Sopa_De_Letras(tk.Frame):
         self.canvas_Palabras.config(yscrollcommand=self.Barra_Lateral.set)
         self.Barra_Lateral.pack(side="right",fill="y")
 
-    def crearTablero(self):
-        for fila in range(self.filas):
-            fila_celda = []
-            for col in range(self.col):
-                letra = random.choice(self.abecedario)
-                celda =  LetraCelda(self.canvas,fila,col,self.size,letra)
-                fila_celda.append(celda)
-            
-            self.celdas.append(fila_celda)
-    
 
     #E: Atributo de palabras restantes
     #S: Mostramos en la interfaz la cantidad de palabras a encontrar en la sopa
@@ -148,8 +132,9 @@ class Sopa_De_Letras(tk.Frame):
                 self.incrementar_Cronometro()
             elif(self.texto_Tipo_Juego == "Contratiempo"):
                 self.tiempo_del_Temporizador()
-        self.boton_Abandonar_Juego = tk.Button(self,width=13,text="Abandonar",fg="#49FDA9",bg="#000C3D",font=("Arial",18,"bold"),
+        self.boton_Abandonar_Juego = tk.Button(self,width=13,text=self.idioma.get("boton_Abandonar"),fg="#49FDA9",bg="#000C3D",font=("Arial",18,"bold"),
                                                command=lambda:self.abandonar_Juego())
+        self.idioma.registrar_Clave_Boton(self.boton_Abandonar_Juego,"boton_Abandonar")
         self.boton_Abandonar_Juego.grid(row=3,column=4)
             
     def incrementar_Cronometro(self):
@@ -204,8 +189,7 @@ class Sopa_De_Letras(tk.Frame):
         
         self.fondo_cronometro.after(1000,self.decrementar_Temporizador)
 
-    def volver_Inicio(self):
-        self.controlador.mostrar_frame("Menu")
+    
 
     def reintentar(self):
         self.controlador.iniciar_Sopa(
