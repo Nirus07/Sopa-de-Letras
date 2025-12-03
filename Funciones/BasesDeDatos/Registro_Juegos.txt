@@ -1,2 +1,4 @@
 Jugador: LANDO, Tiempo: 0:23, Tipo de Juego: Tradicional con Tiempo, Dificultad: Principiante
 Jugador: MANUEL, Tiempo: 0:0, Tipo de Juego: Versus, Dificultad: Intermedia
+Jugador: LITO, Tiempo: 0:0, Tipo de Juego: Tradicional, Dificultad: Intermedia
+Jugador: MIGUEL, Tiempo: 0:47, Tipo de Juego: Tradicional con Tiempo, Dificultad: Beginner

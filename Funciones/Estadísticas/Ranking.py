@@ -92,7 +92,7 @@ class Estadisticas(tk.Frame):
             texto_Boton_Dificultad = self.idioma.get(clave_Dificultad)
             # Creamos cada boton con el texto de cada dificultad
             self.boton_Dificultad = tk.Button(self,text=texto_Boton_Dificultad,width=18,bg="#49FDA9",fg="#000C3D",
-                                              command=lambda texto=texto_Boton_Dificultad:self.mostrar_ranking(texto),font=("Arial",20,"bold"))
+                                              command=lambda texto=clave_Dificultad:self.mostrar_ranking(texto),font=("Arial",20,"bold"))
             
             self.idioma.registrar_Clave_Boton(self.boton_Dificultad,clave_Dificultad)
             
@@ -155,48 +155,37 @@ class Estadisticas(tk.Frame):
 
         self.mostrar_top3(self.canvas, dificultad)
 
+    def obtener_ruta_archivo(self, modo, dificultad):
+        rutas = {
+            "Tradicional": {
+                "Principiante": Rutas.Estadisticas_Tradicional_Tiempo_Principiante_txt,
+                "Intermedia": Rutas.Estadisticas_Tradicional_Tiempo_Intermedio_txt,
+                "Avanzada": Rutas.Estadisticas_Tradicional_Avanzado_txt
+            },
+            "Contratiempo": {
+                "Principiante": Rutas.Estadisticas_Contratiempo_Principiante_txt,
+                "Intermedia": Rutas.Estadisticas_Contratiempo_Intermedio_txt,
+                "Avanzada": Rutas.Estadisticas_Contratiempo_Avanzado_txt
+            },
+            "Versus": {
+                "Principiante": Rutas.Estadisticas_Versus_Principiante_txt,
+                "Intermedia": Rutas.Estadisticas_Versus_Intermedio_txt,
+                "Avanzada": Rutas.Estadisticas_Versus_Avanzado_txt
+            }
+        }
+        return rutas[modo][dificultad]
    
     
 
     def registrar_Estadisticas_Todo(self,jugador_Nombre,minutos,segundos,tipo_Juego,dificultad):
-
         with open(Rutas.Registro_Todo,"a", encoding="utf-8") as archivo:
-            archivo.write(f"Jugador: {jugador_Nombre}, Tiempo: {minutos}:{segundos}, Tipo de Juego: {tipo_Juego}, Dificultad: {dificultad}\n")
+            archivo.write(f"Jugador: {jugador_Nombre}, Tiempo: {minutos}:{segundos}, Tipo de Juego: {self.idioma.get(tipo_Juego)}, Dificultad: {self.idioma.get(dificultad)}\n")
         
         # Inicializamos la ruta con None por defecto
-        ruta = None
-        # Verificamos si el tipo de modo es tradicional
-        if(tipo_Juego == "Tradicional con Tiempo"):
-            if(dificultad == "Principiante"):
-                ruta = Rutas.Estadisticas_Tradicional_Tiempo_Principiante_txt
-            elif(dificultad == "Intermedia"):
-                ruta = Rutas.Estadisticas_Tradicional_Tiempo_Intermedio_txt
-            elif(dificultad == "Avanzada"):
-                ruta = Rutas.Estadisticas_Tradicional_Avanzado_txt
-
-        # Verificamos si el tipo de modo es contratiempo
-        elif(tipo_Juego == "Contratiempo"):
-            
-            if(dificultad == "Principiante"):
-                ruta = Rutas.Estadisticas_Contratiempo_Principiante_txt
-            elif(dificultad == "Intermedia"):
-                ruta = Rutas.Estadisticas_Contratiempo_Intermedio_txt
-            elif(dificultad == "Avanzada"):
-                ruta = Rutas.Estadisticas_Contratiempo_Avanzado_txt
-
-        # Verificamos si el tipo de modo es modo versus
-        elif(tipo_Juego == "Versus"):
-            if(dificultad == "Principiante"):
-                ruta = Rutas.Estadisticas_Versus_Principiante_txt
-            elif(dificultad == "Intermedia"):
-                ruta = Rutas.Estadisticas_Versus_Intermedio_txt
-            elif(dificultad == "Avanzada"):
-                ruta = Rutas.Estadisticas_Versus_Avanzado_txt
-
+        ruta = self.obtener_ruta_archivo(tipo_Juego,dificultad)
         # Si la ruta esta bien, se coloca en el txt del top correspondiente
-        if(ruta):
-            with open(ruta, "a", encoding="utf-8") as archivo_modo:
-                archivo_modo.write(f"Jugador: {jugador_Nombre}, Tiempo: {minutos}:{segundos:02d}\n")
+        with open(ruta, "a", encoding="utf-8") as archivo_modo:
+            archivo_modo.write(f"Jugador: {jugador_Nombre}, Tiempo: {minutos}:{segundos:02d}\n")
         
 
 
@@ -294,15 +283,22 @@ class Estadisticas(tk.Frame):
         self.canvas = tk.Canvas(self, width=800, height=600, bg="#000C3D")
         self.canvas.grid(row=2, column=2)
 
-        titulo = f"Ranking {self.modo_seleccionado} - {dificultad}"
+        modo_clave = {
+            "Tradicional": "Ranking_Tradicional_Tiempo",
+            "Contratiempo": "Ranking_Contratiempo",
+            "Versus": "Ranking_Versus"
+        }
+
+        titulo = f"{self.idioma.get(modo_clave[self.modo_seleccionado])} - {dificultad}"
         self.canvas.create_text(400, 40, text=titulo,
                                 fill="#49FDA9", font=("Arial", 20, "bold"))
 
         top_3 = self.leer_jugadores(self.modo_seleccionado, dificultad)
 
         if(not top_3):
-            self.canvas.create_text(400, 250, text="No hay registros",
-                                    fill="#49FDA9", font=("Arial", 18, "bold"))
+            self.canvas.create_text(400, 250, text=self.idioma.get("No_Hay_Registros"),
+                        fill="#49FDA9", font=("Arial", 18, "bold"))
+
         else:
             y = 160
             pos = 1
@@ -313,7 +309,7 @@ class Estadisticas(tk.Frame):
                 y += 60
                 pos += 1
 
-        self.boton_regresar = tk.Button(self, text="Regresar",
+        self.boton_regresar = tk.Button(self, text=self.idioma.get("Regresar"),
                                    width=20, bg="#49FDA9", fg="#000C3D",
                                    font=("Arial", 16, "bold"),
                                    command=self.dificultades)
@@ -324,8 +320,8 @@ class Estadisticas(tk.Frame):
         self.canvas = tk.Canvas(self, width=800, height=600, bg="#000C3D")
         self.canvas.grid(row=2, column=2)
 
-        self.canvas.create_text(400, 40, text="Historial de Juegos",
-                                fill="#49FDA9", font=("Arial", 20, "bold"))
+        self.canvas.create_text(400, 40, text=self.idioma.get("Ranking_General"),
+                        fill="#49FDA9", font=("Arial", 20, "bold"))
 
         try:
             with open(Rutas.Registro_Todo, "r") as f:
@@ -336,7 +332,7 @@ class Estadisticas(tk.Frame):
         y = 120
 
         if(not lineas):
-            self.canvas.create_text(400, 200, text="No hay registros",
+            self.canvas.create_text(400, 200, text=self.idioma.get("Ranking_General"),
                                     fill="#49FDA9", font=("Arial", 18, "bold"))
         else:
             for linea in lineas[-10:]:
@@ -344,7 +340,7 @@ class Estadisticas(tk.Frame):
                                         fill="#49FDA9", font=("Arial", 14))
                 y += 40
 
-        boton_regresar = tk.Button(self, text="Regresar", width=20,
+        boton_regresar = tk.Button(self, text=self.idioma.get("Regresar"), width=20,
                                    bg="#49FDA9", fg="#000C3D",
                                    font=("Arial", 16, "bold"),
                                    command=self.ventana_Estadisticas)

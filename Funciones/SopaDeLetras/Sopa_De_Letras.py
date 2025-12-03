@@ -199,7 +199,7 @@ class SopaDeLetras(tk.Frame):
         self.frame_A = tk.Frame(self, bg="#000C3D")
         self.frame_A.grid(row=1, column=2)
 
-        tk.Label(self.frame_A, text="Jugador A",
+        tk.Label(self.frame_A, text=self.idioma.get("Jugador_B"),
                 font=("Arial", 18, "bold"), fg="#49FDA9", bg="#000C3D").pack()
 
         self.crono_A = tk.Label(self.frame_A, text="0:00",
@@ -210,7 +210,7 @@ class SopaDeLetras(tk.Frame):
         self.frame_B = tk.Frame(self, bg="#000C3D")
         self.frame_B.grid(row=3, column=2)
 
-        tk.Label(self.frame_B, text="Jugador B",
+        tk.Label(self.frame_B, text=self.idioma.get("Jugador_B"),
                 font=("Arial", 18, "bold"), fg="#49FDA9", bg="#000C3D").pack()
 
         self.crono_B = tk.Label(self.frame_B, text="0:00",

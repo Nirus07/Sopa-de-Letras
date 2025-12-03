@@ -42,6 +42,15 @@ Textos = {
         "Juegos_Generales": "Todos los Juegos",
 
         "boton_Mostrar_Solucion": "Mostrar Solución",
+        "Jugador_A":"Jugador A",
+        "Jugador_B":"Jugador B",
+
+        # Sección Ranking / Estadísticas
+        "Ranking_Tradicional_Tiempo": "Ranking Tradicional con Tiempo",
+        "Ranking_Contratiempo": "Ranking Contratiempo",
+        "Ranking_Versus": "Ranking Versus",
+        "Ranking_General": "Historial de Juegos",
+        "No_Hay_Registros": "No hay registros",
 
         # Seccion Ayuda
         "Caracteristicas": ("Caracteristicas: La sopa de letras cuenta con 4 tipos de juegos los cuáles son; Tradicional, Tradicional con tiempo, Contratiempo y Versus,"
@@ -115,6 +124,15 @@ Textos = {
         "Juegos_Generales": "All Games",
 
         "boton_Mostrar_Solucion": "Show Solution",
+        "Jugador_A":"Player A",
+        "Jugador_B":"Player B",
+
+        # Sección Ranking / Estadísticas
+        "Ranking_Tradicional_Tiempo": "Traditional Time Ranking",
+        "Ranking_Contratiempo": "Time Attack Ranking",
+        "Ranking_Versus": "Versus Ranking",
+        "Ranking_General": "Game History",
+        "No_Hay_Registros": "No records found",
 
         # Help Section
         "Caracteristicas": (
@@ -145,10 +163,8 @@ Textos = {
             "Rules:\n"
             "1. The player must select the game mode and difficulty they want to play.\n"
             "2. To appear in the ranking, the player must complete any game mode.\n"
-            "3. In 'Versus' mode, if a player fails to find a word within 2 minutes, "
-            "they will automatically lose.\n"
-            "4. The player can select the words they want to search for only in the "
-            "'Beginner' difficulty.\n"
+            "3. The player can't select the words they want to search for only in "
+            "any difficulty.\n"
         ),
 
         
