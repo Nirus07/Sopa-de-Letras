@@ -7,7 +7,6 @@ from Funciones.Idioma.Idioma import idioma_Global
 
 from Funciones.Rutas import Rutas
 
-import os
 
 # E: Hereda el frame de la ventana principal
 # S: Muestra otra seccion donde estarán los botones para cada ranking
@@ -117,10 +116,10 @@ class Estadisticas(tk.Frame):
 
         if(modo == "Tradicional"):
             if(dificultad == "Principiante"):
-                return Rutas.Estadisticas_Tradicional_Tiempo_Principiantes_txt
+                return Rutas.Estadisticas_Tradicional_Tiempo_Principiante_txt
             if(dificultad == "Intermedia"):
-                return Rutas.Estadisticas_Tradicional_Tiempo_Intermedios_txt
-            return Rutas.Estadisticas_Tradicional_Avanzados_txt
+                return Rutas.Estadisticas_Tradicional_Tiempo_Intermedio_txt
+            return Rutas.Estadisticas_Tradicional_Avanzado_txt
 
         if(modo == "Contratiempo"):
             if(dificultad == "Principiante"):
@@ -135,16 +134,14 @@ class Estadisticas(tk.Frame):
             if(dificultad == "Intermedia"):
                 return Rutas.Estadisticas_Versus_Intermedio_txt
             return Rutas.Estadisticas_Versus_Avanzado_txt
-    
-    # # Metodo para mostrar las estadisticas del juego segun la dificultad
-    # def seleccion_Dificultad(self,texto_dificultad):
-    #     self.estadisticas_Tradicional_Tiempo(texto_dificultad)
+        
+
     
     def estadisticas_Tradicional_Tiempo(self, dificultad):
         self.canvas = tk.Canvas(self, width=800, height=600, bg="#000C3D")
         self.canvas.grid(row=2, column=2)
 
-        titulo = f"Ranking Tradicional con Tiempo - {dificultad}"
+        titulo = f"Ranking Tradicional con Tiempo - {self.idioma.get(dificultad)}"
         self.canvas.create_text(400, 40, text=titulo,
                                 font=("Arial", 20, "bold"), fill="#49FDA9")
 
@@ -169,7 +166,6 @@ class Estadisticas(tk.Frame):
         # Inicializamos la ruta con None por defecto
         ruta = None
         # Verificamos si el tipo de modo es tradicional
-        print(tipo_Juego)
         if(tipo_Juego == "Tradicional con Tiempo"):
             if(dificultad == "Principiante"):
                 ruta = Rutas.Estadisticas_Tradicional_Tiempo_Principiante_txt
@@ -260,19 +256,31 @@ class Estadisticas(tk.Frame):
             if len(linea_Lectura) < 3:
                 continue
 
-            nombre = linea_Lectura[1]
+            try:
+                idx = linea_Lectura.index("Jugador:") + 1
+                nombre = linea_Lectura[idx].replace(",", "")
+            except ValueError:
+                nombre = "Desconocido"
 
-            # MODO TRADICIONAL Y CONTRATIEMPO === tiempo MM:SS
+            # ==========================
+            #   EXTRAER TIEMPO CORRECTAMENTE
+            # ==========================
+            tiempo = None
+            for token in linea_Lectura:
+                if ":" in token:
+                    partes = token.split(":")
+                    if len(partes) == 2 and partes[0].isdigit() and partes[1].isdigit():
+                        tiempo = token
+                        break
+
+            if tiempo is None:
+                continue
+
+            # Modo Tradicional / Contratiempo = tiempo MM:SS
             if modo in ("Tradicional", "Contratiempo"):
-                tiempo = linea_Lectura[2]
-                if ":" in tiempo:
-                    m, s = tiempo.split(":")
-                    total = int(m) * 60 + int(s)
-                else:
-                    continue  
-            # MODO VERSUS === puntaje simple
+                m, s = tiempo.split(":")
+                total = int(m) * 60 + int(s)
             else:
-                tiempo = linea_Lectura[2]
                 total = int(tiempo)
 
             lista_Archivos_Temp.append((nombre, tiempo, total))
@@ -382,70 +390,3 @@ class Estadisticas(tk.Frame):
 
         
 
-
-
-
-    # def validar_Tiempo(self,minutos=5,segundos=5):
-    #     self.arreglo_Letras_Jugadores_Tradicional_Tiempo = []
-    #     for jugador_Tradicional in self.jugadores_Arreglo_Tradicional_Tiempo:
-    #         letras_Jugador_Tradicional_Tiempo = []
-    #         for letras in jugador_Tradicional[2]:
-    #             if(letras != ":"):
-    #                 letras_Jugador_Tradicional_Tiempo.append(letras)
-    #         self.arreglo_Letras_Jugadores_Tradicional_Tiempo.append(letras_Jugador_Tradicional_Tiempo)
-
-    #     self.arreglo_Tiempo_Tradicional = []
-    #     for letras_Jugadores in self.arreglo_Letras_Jugadores_Tradicional_Tiempo:
-    #         letras_Jugadores[0] = minutos 
-    #         segundos = f"{letras_Jugadores[1]}{letras_Jugadores[2]}"
-
-    #         if(minutos < self.minutos_Menor and int(segundos) < self.segundos_Menor):
-    #             self.minutos_Menor = minutos
-    #             self.segundos_Menor = segundos
-    #             self.tiempo_Menor = f"{self.minutos_Menor}:{self.segundos_Menor}"
-    #             self.arreglo_Tiempo_Tradicional.append(self.tiempo_Menor)
-                
-
-    #         else:
-    #             self.tiempo = f"{minutos}:{segundos}"
-    #             self.arreglo_Tiempo_Tradicional.append(self.tiempo)
-
-    #     return self.arreglo_Tiempo_Tradicional
-
-
-    # def leer_Estadisticas(self,tipo_Juego,usuario="Rodrigo",minutos=5,segundos=5,dificultad="Avanzada"):
-    #     self.minutos_Menor = 1000
-    #     self.segundos_Menor = 1000
-    #     if(tipo_Juego != "Tradicional"):
-    #         if(tipo_Juego == "Tradicional con Tiempo"):
-    #             self.jugadores_Arreglo_Tradicional_Tiempo = []
-    #             with open(Rutas.Estadisticas_Tradicional_Tiempo_txt,"r") as archivo:
-    #                 Jugadores = archivo.readlines()
-    #                 for jugador in Jugadores:
-    #                     posicion_Jugador_Tradicional = jugador.strip().split()
-    #                     self.jugadores_Arreglo_Tradicional_Tiempo.append(posicion_Jugador_Tradicional)
-                    
-    #                 self.tiempos_Arreglos = self.validar_Tiempo()
-                    
-                        
-
-    #         elif(tipo_Juego == "Contratiempo"):
-    #             with open(Rutas.Estadisticas_Contratiempo_txt,"r") as archivo:
-    #                 Jugadores = archivo.readlines()
-    #                 for jugador in Jugadores:
-    #                     posicion_Jugador = jugador.strip().split()
-    #                     if(posicion_Jugador[1] == "Rodrigo"):
-    #                         print("hola")
-
-    #         else:
-    #             with open(Rutas.Estadisticas_Versus_txt,"r") as archivo:
-    #                 Jugadores = archivo.readlines()
-    #                 for jugador in Jugadores:
-    #                     posicion_Jugador = jugador.strip().split()
-    #                     if(posicion_Jugador[1] == "Rodrigo"):
-    #                         print("hola")
-    #  def tipo_De_Ranking(self, texto):
-    #     if texto == "Tradicional con Tiempo":
-    #         self.dificultades()
-    #     else:
-    #         print("Modo aún no implementado:", texto)

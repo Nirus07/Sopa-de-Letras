@@ -41,6 +41,8 @@ Textos = {
         "Versus_Estadisticas": "Versus",
         "Juegos_Generales": "Todos los Juegos",
 
+        "boton_Mostrar_Solucion": "Mostrar Solución",
+
         # Seccion Ayuda
         "Caracteristicas": ("Caracteristicas: La sopa de letras cuenta con 4 tipos de juegos los cuáles son; Tradicional, Tradicional con tiempo, Contratiempo y Versus,"
         "estos tipos de juegos cuentan con sus dificultades las cuáles son; Principiante, Intermedio y Avanzado, dependiendo del tipo de juego"
@@ -112,6 +114,8 @@ Textos = {
         "Versus_Estadisticas": "Versus",
         "Juegos_Generales": "All Games",
 
+        "boton_Mostrar_Solucion": "Show Solution",
+
         # Help Section
         "Caracteristicas": (
             "Features: The word search game includes 4 game types: Traditional, "
@@ -146,6 +150,8 @@ Textos = {
             "4. The player can select the words they want to search for only in the "
             "'Beginner' difficulty.\n"
         ),
+
+        
 
         # Rutas Imagenes
 

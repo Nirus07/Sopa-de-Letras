@@ -8,6 +8,11 @@ from Funciones.Idioma.Idioma import idioma_Global
 
 from Funciones.Estadísticas.Ranking import Estadisticas
 
+
+# E: Hereda tk
+# S: Muestra la ventana con las opciones de tipos de juegos y llama a las dificultades
+# R: Solo recibe el frame del tk padre  
+
 # Creamos la clase para tipos de juegos que hereda tk
 class TiposDeJuegosFrame(tk.Frame):
     def __init__(self,ventana_Padre,controlador):

@@ -1,28 +1,25 @@
 from Funciones.Rutas import Rutas
 
 class Apodo:
-    def __init__(self,nuevo_Apodo):
-        self.apodos = []
-        self.apodos_Repetidos(nuevo_Apodo)
+    # Archivo donde se guardan los usuarios
+    ruta = Rutas.Jugadores 
 
-
-    def apodos_Repetidos(self,nuevo_Apodo):
-        if(self.apodos == []):
+    # Método estático para saber si el apodo existe
+    @staticmethod
+    def existe_Apodo(nuevo_Apodo):
+        # Devuelve True si el apodo esta registrado
+        try:
+            with open(Apodo.ruta, "r", encoding="utf-8") as archivo:
+                for linea in archivo:
+                    if linea.strip().lower() == nuevo_Apodo.lower():
+                        return True
+        except FileNotFoundError:
             return False
-        else:
-            self.leer_Base_De_Datos(nuevo_Apodo)
-            
-    def base_De_Datos_Usuarios(self):
-        with open("BaseDeDatos/Jugadores.txt","a") as archivo:
-            for apodo in self.apodos:
-                archivo.write(f"{apodo}\n")
-    
-    def leer_Base_De_Datos(self,nuevo_Apodo):
-        with open("BaseDeDatos/Jugadores.txt","r") as archivo:
-            usuarios =archivo.readlines()
-            for usuario in usuarios:
-                apodo = usuario.strip()
-                if(apodo == nuevo_Apodo):
-                    return True
-                else:
-                    return False
+        return False
+
+    # Método estático para reistrar
+    @staticmethod
+    def registrar_Apodo(nuevo_Apodo):
+        """Registra un apodo nuevo"""
+        with open(Apodo.ruta, "a", encoding="utf-8") as archivo:
+            archivo.write(nuevo_Apodo + "\n")

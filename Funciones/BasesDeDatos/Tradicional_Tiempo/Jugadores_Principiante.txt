@@ -1,1 +1,4 @@
 Jugador: Manuel-2, Tiempo: 0:14
+Jugador: Rodrigo, Tiempo: 0:40
+Jugador: RODRIGO, Tiempo: 0:20
+Jugador: LANDO, Tiempo: 0:23
